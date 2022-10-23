@@ -31,7 +31,7 @@ fetch('https://randomuser.me/api/?results=60&inc=name,email,phone,location')
 	.then((data) => {
 		const results = data.results;
 		for(i = 0; i < results.length; i++){
-			console.log(results[i]);
+
 			// article tag
 			let article = document.createElement('article');
 			article.classList.add('m-president');
