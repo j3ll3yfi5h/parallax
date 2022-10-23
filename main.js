@@ -24,37 +24,48 @@ let callback = (entries, observer) => {
 let observer = new IntersectionObserver(callback);
 
 // get data
-fetch('/data/presidents.json')
+fetch('https://randomuser.me/api/?results=60&inc=name,email,phone,location')
 	// parse data
 	.then((response) => response.json())
 	// use data
 	.then((data) => {
-		for(i = 0; i < data.length; i++){
+		const results = data.results;
+		for(i = 0; i < results.length; i++){
+			console.log(results[i]);
 			// article tag
 			let article = document.createElement('article');
 			article.classList.add('m-president');
 
 			// h2 tag
 			let h2 = document.createElement('h2');
-			h2.append(data[i]['president']);
+			h2.append(results[i].name.first + ' ' + results[i].name.last);
 			article.append(h2);
 
-			// div tag
-			let div = document.createElement('div');
-			let tookOffice = data[i]['took_office'].substring(0,4);
-			let leftOffice = data[i]['left_office'];
-			if(leftOffice != null){
-				leftOffice = ' – ' + leftOffice.substring(0,4);
-			} else {
-				leftOffice = ' – ?';
-			}
-			div.append(tookOffice + leftOffice);
-			article.append(div);
+			// a tag
+			let a = document.createElement('a');
+			a.setAttribute('href', 'mailto:'+results[i].email);
+			a.append(results[i].email);
+			article.append(a);
 
 			// div tag
-			let strong = document.createElement('strong');
-			strong.append(data[i]['party']);
-			article.append(strong);
+			let div2 = document.createElement('div');
+			div2.append(results[i].phone);
+			article.append(div2);
+
+			// div tag
+			let div3 = document.createElement('div');
+			div3.append(results[i].location.street.name);
+			article.append(div3);
+
+			// div tag
+			let div4 = document.createElement('div');
+			div4.append(results[i].location.city);
+			article.append(div4);
+
+			// div tag
+			let div5 = document.createElement('div');
+			div5.append(results[i].location.postcode);
+			article.append(div5);
 			
 			// append to container
 			presidentsOutput.append(article);
