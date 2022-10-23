@@ -24,7 +24,7 @@ let callback = (entries, observer) => {
 let observer = new IntersectionObserver(callback);
 
 // get data
-fetch('/data/presidents.json')
+fetch('data/presidents.json')
 	// parse data
 	.then((response) => response.json())
 	// use data
