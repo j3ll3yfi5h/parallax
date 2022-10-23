@@ -1,0 +1,116 @@
+// reset
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
+}
+
+// basics
+:root {
+	box-sizing: border-box;
+	font-family: sans-serif;
+	font-size: clamp(16px, 1.5vw, 24px);
+	line-height: 1.4;
+	color: #e9fb59;
+	background-color: #1d1218;
+	scrollbar-gutter: stable;
+}
+
+h1 {
+	font-size: 7.5vw;
+}
+
+h2 {
+	font-size: 1.5rem;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+
+// modules
+.m-image {
+	will-change: transform;
+	&--whitehouse {
+		width: 100%;
+		transform: translateY(var(--move-y-3, 0));
+	}
+	&--biden, &--washington {
+		position: absolute;
+		width: 25vw;
+	}
+	&--biden {
+		z-index: 1;
+		top: 75vw;
+		right: 30%;
+		transform: translateY(var(--move-y-1, 0));
+	}
+	&--washington {
+		top: 12.5vw;
+		left: 30%;
+		transform: translateY(var(--move-y-2, 0));
+	}
+	&__caption {
+		position: absolute;
+		bottom: 12.5%;
+		left: 0;
+		right: 0;
+		text-align: center;
+	}
+	&__container {
+		position: relative;
+		overflow: hidden;
+	}
+}
+
+.m-president {
+	padding: 1.25rem;
+	color: #1d1218;
+	background-color: #e9fb59;
+	opacity: 0;
+	transition: opacity .25s ease-in;
+	@media only screen and (min-width: 841px){
+		@for $i from 1 through 3 {
+			&:nth-of-type(3n + #{$i}) {
+				transition-delay: calc(#{$i} * .1s);
+			}
+		}
+	}
+	@media only screen and (max-width: 840px){
+		@for $i from 1 through 2 {
+			&:nth-of-type(2n + #{$i}) {
+				transition-delay: calc(#{$i} * .1s);
+			}
+		}
+	}
+	@media only screen and (max-width: 600px){
+		transition-delay: 0;
+	}
+	&.is-visible {
+		opacity: 1;
+	}
+	&__container {
+		display: grid;
+		gap: 1.875rem 1.25rem;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		padding: 1.25rem;
+		@media only screen and (max-width: 840px){
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+		@media only screen and (max-width: 600px){
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+}
+
+// layouts
+.l-main {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 10fr) minmax(0, 1fr);
+	grid-template-areas: '. content .';
+	&__inner {
+		grid-area: content;
+	}
+}
